@@ -1,0 +1,51 @@
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  server:
+    password: "helloworld"   # 봇 쪽과 맞추기
+    sources:
+      youtube: false         # 내장 유튜브 소스 비활성화 (plugin 사용)
+      soundcloud: false
+      bandcamp: false
+      vimeo: false
+      twitch: false
+      http: true             # ✅ yt-dlp fallback 직링크 재생 가능
+      local: false
+
+  plugins:
+    # ✅ YouTube Plugin (공식)
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.17.0"
+      repository: "https://maven.lavalink.dev/releases"
+
+logging:
+  level:
+    root: INFO
+    lavalink: INFO
+    dev.lavalink.youtube: DEBUG   # 유튜브 플러그인 상세 로그
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+
+    # ✅ 필요 시 쿠키 사용 (연령 제한/지역 제한 대응)
+    cookiePath: "./cookies.txt"
+
+    # ✅ 우선 사용할 안전한 클라이언트
+    clients:
+      - ANDROID_VR
+      - MWEB
+      - WEBEMBEDDED
+      - MUSIC
+
+    # ✅ 불안정한 클라이언트 차단
+    clientOptions:
+      ANDROID: { playback: false, videoLoading: false, searching: false }
+      ANDROID_MUSIC: { playback: false, videoLoading: false, searching: false }
+      #ANDROID_VR: { playback: false, videoLoading: false, searching: false }
+      TV: { playback: false }
+      TVHTML5EMBEDDED: { playback: false }
